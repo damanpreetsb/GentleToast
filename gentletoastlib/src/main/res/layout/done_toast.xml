@@ -1,19 +1,19 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#00000000"
     android:gravity="center"
+    android:layout_marginBottom="25dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="25dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/base_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="25dp"
         android:background="@drawable/done"
         android:orientation="horizontal">
 
@@ -22,17 +22,25 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/mainview"
             android:gravity="center">
 
             <com.singh.daman.gentletoast.DoneToast
                 android:id="@+id/successView"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center_vertical|start"
                 android:layout_margin="10dp"
-                android:gravity="center_vertical|start"
-                android:layout_weight="0.45" />
+                android:visibility="gone"
+                android:gravity="center_vertical|start" />
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical|start"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:gravity="center_vertical|start"/>
 
         </LinearLayout>
 
@@ -46,4 +54,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

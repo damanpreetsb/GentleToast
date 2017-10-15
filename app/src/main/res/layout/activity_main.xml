@@ -13,4 +13,22 @@
         android:layout_margin="5dp"
         android:text="@string/done"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_custom"
+        android:layout_toRightOf="@+id/btn_done"
+        android:layout_toEndOf="@+id/btn_done"
+        android:layout_margin="5dp"
+        android:text="@string/custom"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_simple"
+        android:layout_toRightOf="@+id/btn_custom"
+        android:layout_toEndOf="@+id/btn_custom"
+        android:layout_margin="5dp"
+        android:text="@string/simple"/>
+
 </RelativeLayout>

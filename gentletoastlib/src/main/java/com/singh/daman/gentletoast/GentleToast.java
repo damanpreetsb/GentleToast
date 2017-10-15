@@ -1,10 +1,12 @@
 package com.singh.daman.gentletoast;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,17 +17,19 @@ import com.singh.daman.gentletoast.lib.R;
  */
 
 public class GentleToast {
-    public static final int DONE = 0;
-    public static final int WARNING = 1;
-    public static final int ERROR = 2;
-    public static final int SAVED = 3;
-    public static final int CONNECTED = 4;
-    public static final int UPDATE = 5;
-    public int color = R.color.black;
+    public static final int DONE = 1;
+    private int textColor = R.color.white;
+    private int backgroundColor = R.color.black;
+    private int strokeWidth = 0;
+    private int strokeColor = R.color.black;
+    private int backgroundRadius = 20;
+    private int image = R.mipmap.ic_launcher_round;
     private TextView text;
+    private ImageView imageView;
     private Context context;
     private Toast toast;
     private View layout;
+    private GradientDrawable drawable;
 
     public static GentleToast with(Context context){
         GentleToast gentleToast = new GentleToast();
@@ -36,6 +40,18 @@ public class GentleToast {
     private void setContext(Context context){
         this.context = context;
         toast = new Toast(context);
+    }
+
+    public GentleToast shortToast(String strMsg) {
+        showToast(0, strMsg);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        return this;
+    }
+
+    public GentleToast longToast(String strMsg) {
+        showToast(0, strMsg);
+        toast.setDuration(Toast.LENGTH_LONG);
+        return this;
     }
 
     public GentleToast shortToast(String strMsg, int toastType) {
@@ -50,61 +66,62 @@ public class GentleToast {
         return this;
     }
 
-    public GentleToast setTextColor(int color) {
-        this.color = color;
+    public GentleToast setTextColor(int textColor) {
+        this.textColor = textColor;
         return this;
     }
 
+    public GentleToast setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+        return this;
+    }
+
+    public GentleToast setStrokeWidth(int strokeWidth) {
+        this.strokeWidth = strokeWidth;
+        return this;
+    }
+
+    public GentleToast setStrokeColor(int strokeColor) {
+        this.strokeColor = strokeColor;
+        return this;
+    }
+
+    public GentleToast setBackgroundRadius(int backgroundRadius) {
+        this.backgroundRadius = backgroundRadius;
+        return this;
+    }
+
+    public GentleToast setImage(int image) {
+        this.image = image;
+        imageView.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+
     public Toast show(){
-        text.setTextColor(ContextCompat.getColor(context, color));
+        drawable.setStroke(strokeWidth, ContextCompat.getColor(context, strokeColor));
+        drawable.setColor(ContextCompat.getColor(context, backgroundColor));
+        drawable.setCornerRadius(backgroundRadius);
+        text.setTextColor(ContextCompat.getColor(context, textColor));
+        imageView.setBackground(ContextCompat.getDrawable(context, image));
         toast.setView(layout);
         toast.show();
         return toast;
     }
 
     private void showToast(int toastType, String strMsg) {
+        layout = LayoutInflater.from(context).inflate(R.layout.done_toast, null, false);
+        LinearLayout linearLayout = (LinearLayout) layout.findViewById(R.id.base_layout);
+        drawable = (GradientDrawable) linearLayout.getBackground();
+        text = (TextView) layout.findViewById(R.id.done_message);
+        imageView = (ImageView) layout.findViewById(R.id.image_view);
+        text.setText(strMsg);
         switch (toastType) {
-            case 0: {
-                layout = LayoutInflater.from(context).inflate(R.layout.done_toast, null, false);
-                text = (TextView) layout.findViewById(R.id.done_message);
-                text.setText(strMsg);
+            case 1: {
+                DoneToast doneToast = (DoneToast) layout.findViewById(R.id.successView);
+                doneToast.setVisibility(View.VISIBLE);
                 break;
             }
-           /* case 1:{
-                View layout=LayoutInflater.from(context).inflate(R.layout.warning_layout,null,false);
-                TextView textView= (TextView) layout.findViewById(R.id.warning_message);
-                textView.setText(strMsg);
-                toast.setView(layout);
-                break;
-            }
-            case 2:{
-                View layout=LayoutInflater.from(context).inflate(R.layout.error_layout,null,false);
-                TextView textView= (TextView) layout.findViewById(R.id.error_message);
-                textView.setText(strMsg);
-                toast.setView(layout);
-                break;
-            }
-            case 3:{
-                View layout=LayoutInflater.from(context).inflate(R.layout.saved_layout,null,false);
-                TextView textView= (TextView) layout.findViewById(R.id.saved_message);
-                textView.setText(strMsg);
-                toast.setView(layout);
-                break;
-            }
-            case 4:{
-                View layout=LayoutInflater.from(context).inflate(R.layout.connected_layout,null,false);
-                TextView textView= (TextView) layout.findViewById(R.id.connected_message);
-                textView.setText(strMsg);
-                toast.setView(layout);
-                break;
-            }
-            case 5:{
-                View layout=LayoutInflater.from(context).inflate(R.layout.updating_layout,null,false);
-                TextView textView= (TextView) layout.findViewById(R.id.updating_message);
-                textView.setText(strMsg);
-                toast.setView(layout);
-                break;
-            }*/
         }
     }
 }

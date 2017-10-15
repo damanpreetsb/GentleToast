@@ -1,21 +1,24 @@
 package com.singh.daman.gentletoast;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button doneButton;
+    private Button btnDone, btnCustom, btnSimple;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        doneButton = (Button) findViewById(R.id.btn_done);
-        doneButton.setOnClickListener(this);
+        btnDone = (Button) findViewById(R.id.btn_done);
+        btnCustom = (Button) findViewById(R.id.btn_custom);
+        btnSimple = (Button) findViewById(R.id.btn_simple);
+        btnDone.setOnClickListener(this);
+        btnCustom.setOnClickListener(this);
+        btnSimple.setOnClickListener(this);
     }
 
     @Override
@@ -23,8 +26,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.btn_done:
                 GentleToast.with(this)
-                        .shortToast("Done!!", GentleToast.DONE)
+                        .longToast("Done!", GentleToast.DONE)
+                        .show();
+                break;
+            case R.id.btn_custom:
+                GentleToast.with(this)
+                        .longToast("Custom!")
                         .setTextColor(R.color.colorAccent)
+                        .setBackgroundColor(R.color.colorPrimaryDark)
+                        .setBackgroundRadius(16)
+                        .setStrokeColor(R.color.white)
+                        .setStrokeWidth(4)
+                        .setImage(R.mipmap.ic_launcher)
+                        .show();
+                break;
+            case R.id.btn_simple:
+                GentleToast.with(this)
+                        .shortToast("Simple!")
                         .show();
                 break;
         }

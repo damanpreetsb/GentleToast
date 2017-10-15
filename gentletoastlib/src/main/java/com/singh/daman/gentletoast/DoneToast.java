@@ -14,51 +14,56 @@ import android.view.View;
 
 public class DoneToast extends View {
     private Point start = new Point();
-    private int i = 10;
-    private Point p = new Point();
-    private int j = 0;
-    int flag = 0;
-    private Point stop = new Point();
+    private boolean flag;
+    private Point line2 = new Point();
     private Paint paint = new Paint();
 
     public DoneToast(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.WHITE);
         paint.setStrokeWidth(6);
-        paint.setAntiAlias(true);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        start.x = 0;
         post(animator);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        start.x = 4;
+        start.y = getHeight()/2;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        start.x = getWidth() / 2 - 10;
-        start.y = getHeight() / 2 - 10;
-        canvas.drawLine(start.x, start.y, stop.x, stop.y, paint);
-        if (flag == 1) {
-            canvas.drawLine(getWidth() / 2 - 2, getHeight() / 2 - 2, p.x, p.y, paint);
-        }
+        canvas.drawLine(4, getHeight()/2 , start.x, start.y, paint );
+        if(flag)
+            canvas.drawLine(start.x + 2, start.y, line2.x, line2.y, paint );
     }
 
     Runnable animator = new Runnable() {
         @Override
         public void run() {
-            if (i >= 0) {
-                stop.x = getWidth() / 2 - i;
-                stop.y = getHeight() / 2 - i;
-                i -= 10;
-            } else {
-                while (j <= 25) {
-                    flag = 1;
-                    p.x = getWidth() / 2 + j;
-                    p.y = getHeight() / 2 - j;
-                    j += 5;
-                }
+            if(start.x < getWidth()/2 - getWidth()/5){
+                start.x += 2;
+                start.y += 2;
+            } else if(line2.x <= getWidth() - 10){
+                line2.x += 4;
+                line2.y -= 3;
             }
 
+            if(start.x == getWidth()/2 - getWidth()/5){
+                flag = true;
+                line2.x = start.x;
+                line2.y = start.y;
+                start.x += 2;
+            }
             invalidate();
-            postDelayed(this, 200);
+            postDelayed(this, 30);
         }
     };
 }
