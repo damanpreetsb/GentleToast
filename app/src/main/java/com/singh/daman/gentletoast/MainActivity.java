@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_custom:
                 GentleToast.with(this)
                         .longToast("Custom!")
-                        .setTextColor(R.color.colorAccent)
+                        .setTextColor(R.color.white)
                         .setBackgroundColor(R.color.colorPrimaryDark)
                         .setBackgroundRadius(16)
-                        .setStrokeColor(R.color.white)
+                        .setStrokeColor(R.color.colorAccent)
                         .setStrokeWidth(4)
                         .setImage(R.mipmap.ic_launcher)
                         .show();
